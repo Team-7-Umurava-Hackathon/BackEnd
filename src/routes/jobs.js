@@ -6,6 +6,7 @@ import {
   updateJob,
   deleteJob
 } from "../controllers/jobs.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -13,13 +14,13 @@ const router = express.Router();
  * CREATE JOB
  * POST /api/jobs
  */
-router.post("/", createJob);
+router.post("/", verifyToken, createJob);
 
 /**
  * GET ALL JOBS
  * GET /api/jobs
  */
-router.get("/", getJobs);
+router.get("/",  getJobs);
 
 /**
  * GET SINGLE JOB
@@ -31,12 +32,12 @@ router.get("/:id", getJobById);
  * UPDATE JOB
  * PUT /api/jobs/:id
  */
-router.put("/:id", updateJob);
+router.put("/:id", verifyToken, updateJob);
 
 /**
  * DELETE JOB
  * DELETE /api/jobs/:id
  */
-router.delete("/:id", deleteJob);
+router.delete("/:id", verifyToken, deleteJob);
 
 export default router;

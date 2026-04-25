@@ -9,6 +9,7 @@ import {
   uploadExcel
 } from "../controllers/talents.js";
 import upload from "../middleware/upload.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -23,25 +24,25 @@ router.post("/:jobId/apply", createTalent);
  * (optional filter: ?job=JOB_ID)
  * GET /api/talents
  */
-router.get("/", getTalents);
+router.get("/",verifyToken, getTalents);
 
 /**
  * GET TALENTS FOR A SPECIFIC JOB
  * GET /api/talents/job/:jobId
  */
-router.get("/job/:jobId", getTalentsByJob);
+router.get("/job/:jobId",verifyToken, getTalentsByJob);
 
 /**
  * GET SINGLE TALENT
  * GET /api/talents/:id
  */
-router.get("/:id", getTalentById);
+router.get("/:id", verifyToken, getTalentById);
 
 /**
  * DELETE TALENT
  * DELETE /api/talents/:id
  */
-router.delete("/:id", deleteTalent);
+router.delete("/:id", verifyToken, deleteTalent);
 
 
 // =====================
@@ -52,7 +53,7 @@ router.delete("/:id", deleteTalent);
  * Upload CV (PDF)
  * POST /api/talents/upload/pdf
  */
-router.post("/upload/pdf", upload.single("file"),  uploadCVPDF);
+router.post("/upload/pdf", verifyToken, upload.single("file"), uploadCVPDF);
 
 /**
  * Upload spreadsheet
@@ -60,6 +61,7 @@ router.post("/upload/pdf", upload.single("file"),  uploadCVPDF);
  */
 router.post(
   "/upload/excel",
+  verifyToken,
   upload.single("file"),
   uploadExcel
 );

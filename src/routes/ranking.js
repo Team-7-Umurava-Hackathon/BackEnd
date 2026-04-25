@@ -5,6 +5,7 @@ import {
   getTopCandidates,
   getRanking
 } from "../controllers/ranking.js";
+import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -17,24 +18,24 @@ const router = express.Router();
  *   topN: 10
  * }
  */
-router.post("/score-candidates", scoreCandidates);
+router.post("/score-candidates", verifyToken, scoreCandidates);
 
 /**
  * Get all rankings for a job (sorted by rank)
  * GET /api/rankings/job/:jobId
  */
-router.get("/job/:jobId", getJobRankings);
+router.get("/job/:jobId", verifyToken, getJobRankings);
 
 /**
  * Get top N candidates for a job
  * GET /api/rankings/job/:jobId/top/:n
  */
-router.get("/job/:jobId/top/:n", getTopCandidates);
+router.get("/job/:jobId/top/:n", verifyToken, getTopCandidates);
 
 /**
  * Get single ranking details
  * GET /api/rankings/:rankingId
  */
-router.get("/:rankingId", getRanking);
+router.get("/:rankingId", verifyToken, getRanking);
 
 export default router;
