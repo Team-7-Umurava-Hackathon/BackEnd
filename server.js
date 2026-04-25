@@ -3,6 +3,8 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import { swaggerDocs } from "./src/config/swagger.js";
+
 
 
 import auth from "./src/routes/auth.js";
@@ -31,7 +33,7 @@ app.get("/", (req, res) => {
     message: "AI Recruiter Backend is running 🚀"
   });
 });
-
+swaggerDocs(app);
 
 // MongoDB Connection
 mongoose
