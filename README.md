@@ -51,3 +51,4 @@ src/
 ├── models/         # Mongoose models
 └── routes/         # API routes
 ```
+![structure](docs/structure.jpeg)
